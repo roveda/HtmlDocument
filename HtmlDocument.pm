@@ -85,14 +85,14 @@
 # 2016-06-19, 0.02, roveda
 #   save2file() can now be called with "force", that will add a "--force" as
 #   parameter to the optionally compress command (works for xz, bzip2 and gzip).
+# 2016-07-13, 0.03, roveda
+#   Removed the usage of Misc.pm
+#   Added set_style().
 #
 # ============================================================
 
 use strict;
 use warnings;
-
-use lib ".";
-use Misc 0.36;
 
 # Yes, I am
 package HtmlDocument;
@@ -103,12 +103,29 @@ package HtmlDocument;
 
 # @EXPORT = qw(html_embody html_h html_link html_place_anchor_list html_set_anchor html_table html_text);
 
-my $VERSION = 0.02;
+my $VERSION = 0.03;
 
 
 # ------------------------------------------------------------
 # That is used for empty cells in tables:
 my $NOTHING = "&nbsp;";
+
+# ------------------------------------------------------------
+# The default style definition
+# That is embedded in <style>$DEFAULT_STYLE_DEFS</style>
+
+my $DEFAULT_STYLE_DEFS="
+  table {
+      border-collapse: collapse;
+      border: 1px solid black;
+      margin-top: 5px;
+  }
+
+  th, td {
+      border: 1px solid black;
+      padding: 5px;
+  }
+";
 
 
 # ------------------------------------------------------------
@@ -138,18 +155,7 @@ sub new {
   $self->{_title} = $title;
 
   # Style definition for the complete html document.
-  $self->{_style_defs} = "
-    table {
-        border-collapse: collapse;
-        border: 1px solid black;
-        margin-top: 5px;
-    }
-
-    th, td {
-        border: 1px solid black;
-        padding: 5px;
-    }
-  ";
+  $self->{_style_defs} = $DEFAULT_STYLE_DEFS;
 
   # Array of "local anchors" from which a simple table of content can be built
   $self->{_anchors} = [];
@@ -249,6 +255,27 @@ sub get_charset {
   my $self = shift;
   return($self->{_charset});
 } # get_char
+
+
+# ------------------------------------------------------------
+sub set_style {
+  # set_style(<style_definitions>)
+  #
+  # Set the style definitions for this html document.
+  # A default style definition is used at instantiation.
+  # There is no syntax check or similar.
+
+  my $self = shift;
+  my $style_defs = shift;
+  $self->{_style_defs} = $style_defs;
+} # set_style
+
+# -----
+sub get_style {
+  # get_style();
+  my $self = shift;
+  return($self->{_style_defs});
+} # get_style
 
 
 # ------------------------------------------------------------
