@@ -526,6 +526,77 @@ sub add_hr {
 
 } # add_hr
 
+# ------------------------------------------------------------
+sub add_ul {
+  # add_ul(<ref_to_array>)
+  #
+  # Add an unordered list.
+  # Use the array elements as list elements.
+
+  my $self = shift;
+  my $rA   = shift;
+
+  my $ul = "";
+  
+  # <ul>
+  #   <li>Coffee</li>
+  #   <li>Tea</li>
+  #   <li>Milk</li>
+  # </ul> 
+
+  if ( $#$rA >= 0 ) {
+    $ul .= "<ul>\n";
+    
+    foreach my $a (@$rA) {
+      $ul .= "  <li>";
+      $ul .= $a;
+      $ul .= "</li>\n";
+    }
+    $ul .= "</ul>\n";
+    $self->{_doc} .= $ul;
+  }
+
+} # add_ul
+
+
+# ------------------------------------------------------------
+sub add_ol {
+  # add_ol(<ref_to_array> [, <list_type> [, <start_value>])
+  #
+  # Add an ordered list.
+  # Use the array elements as list elements.
+  # Optionally specify the list type (1 Aa Ii) and/or
+  # the start value.
+
+  my $self   = shift;
+  my $rA     = shift;
+  my $ltype  = shift;
+  if ( $ltype !~ /1|A|a|I|i/ ) { $ltype = "1" }
+  
+  my $startv = shift || 1;
+
+  my $ol = "";
+  
+  # <ol type="A" start="1">
+  #   <li>Coffee</li>
+  #   <li>Tea</li>
+  #   <li>Milk</li>
+  # </ol> 
+
+  if ( $#$rA >= 0 ) {
+    $ol .= "<ol type=\"$ltype\" start=\"$startv\">\n";
+    
+    foreach my $a (@$rA) {
+      $ol .= "  <li>";
+      $ol .= $a;
+      $ol .= "</li>\n";
+    }
+    $ol .= "</ol>\n";
+    $self->{_doc} .= $ol;
+  }
+
+} # add_ol
+
 
 
 # ------------------------------------------------------------
@@ -648,11 +719,11 @@ sub save2file {
   if      ($compression eq ""      ) {
     return($filename);
   } elsif ($compression =~ /xz/i    ) {
-    if (Misc::exec_os_command("xz $force \"$filename\"")) { return("$filename.xz") }
+    if (exec_os_command("xz $force \"$filename\"")) { return("$filename.xz") }
   } elsif ($compression =~ /bzip2/i ) {
-    if (Misc::exec_os_command("bzip2 $force \"$filename\"")) { return("$filename.bz2") }
+    if (exec_os_command("bzip2 $force \"$filename\"")) { return("$filename.bz2") }
   } elsif ($compression =~ /gzip/i  ) {
-    if (Misc::exec_os_command("gzip $force \"$filename\"")) { return("$filename.gz") }
+    if (exec_os_command("gzip $force \"$filename\"")) { return("$filename.gz") }
   } else {
     print STDERR sub_name() . ": WARNING: Compression '$compression' is not supported.\n";
     return($filename);
