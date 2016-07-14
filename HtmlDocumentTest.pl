@@ -76,16 +76,21 @@ my $html = HtmlDocument->new("HtmlDocument_Test_Page");
 
 $html->add_remark("Created: " . now());
 
+# --------------------------------------------------------------------
+
 $html->add_heading("1", "This is the Test Page for the HtmlDocument perl module", "_default_");
 
-
+# -----
 # At this place, local anchors (as table of contents) shall be inserted.
 $html->set_local_anchor_list();
 
+# --------------------------------------------------------------------
 
 $html->add_heading("2", "Lorem Ipsum", "_default_");
 
 $html->add_paragraph("p", "Lorem ipsum dolor sit amet, <tt>consetetur sadipscing elitr</tt>, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, <b>sed diam voluptua</b>. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.");
+
+# --------------------------------------------------------------------
 
 $html->add_heading("2", "Pre-Formatted Paragraph", "_default_");
 
@@ -96,6 +101,8 @@ $html->add_paragraph("pre", "-rw-rw-r-- 1 foo bar 0 Sep 14 18:44 chapter1.txt
 -rw-rw-r-- 1 foo bar 0 Sep 14 18:49 Preface.txt");
 
 $html->add_goto_top("Up");
+
+# --------------------------------------------------------------------
 
 $html->add_hr();
 
@@ -119,6 +126,21 @@ my @RESULTS = split(/\n/, $results);
 $html->add_table(\@RESULTS, "!", "LR",0 , "Measurement results");
 
 $html->add_goto_top("Up");
+
+# --------------------------------------------------------------------
+
+$html->add_heading("2", "Lists", "_default_");
+
+# Add an unordered list
+
+$html->add_ul(["Coffee", "Tea", "Milk"]);
+
+# --------------------------------------------------------------------
+# Add an ordered list
+
+$html->add_ol(["Water", "Juice", "Ginger Ale", "Dark Brown Lemonade"], "1", "3");
+
+# --------------------------------------------------------------------
 
 # Output the html document to screen
 print $html->get_html();
