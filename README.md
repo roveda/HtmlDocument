@@ -1,13 +1,27 @@
 ## HtmlDocument
-Perl module to build simple html documents in memory and save them to disk.
+A perl module to build simple html documents in memory and save them to disk.
 
-Use this perl package to create a html document.
+Use this perl package to create an html document.
 It will create an empty html when instantiated and you
-may use methods to append more html to it. You cannot insert elements, only append!
+may use methods to append more html to it. 
+You cannot insert elements, only append!
 
-Supported html elements are: paragraphs, headings, tables, anchors, breaks, horizontal rulers.
+# General
+The html document ist created as a string, containing an arbitrary
+number of html elements that you append to the string. When you
+request the html, the string is enclosed in html head and body sections and
+returned.
 
-It has special features concerning anchors, see the detailed description below.
+This does NOT cover ANY POSSIBLE html tags and is not a replacement for
+the usage of native html coding itself. The user still need to know about html 
+and can add arbitrary html using the add_html() method.
+
+Supported html elements are: paragraphs, headings, tables, anchors, links, 
+breaks, horizontal rulers and remarks.
+Default style definitions can be adopted to your preferences.
+
+It has special features concerning anchors to simplify table of contents, 
+see the detailed description below.
 
     HtmlDocument->new([title]);
 Create a new html document, give optionally a title (can also be set later).
