@@ -39,6 +39,8 @@
 #
 # 2016-07-13, 0.01, roveda
 #   Created.
+# 2016-07-14, 0.02, roveda
+#   Removed the dependency to Misc.pm
 #
 # ---------------------------------------------------------
 
@@ -46,23 +48,40 @@
 use strict;
 use warnings;
 
-my $VERSION = 0.01;
+my $VERSION = 0.02;
+
 
 use lib ".";
-use Misc 0.36;
-
 # That perl module is tested:
 use HtmlDocument;
+
+
+# --------------------------------------------------------------------
+
+sub now {
+  my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = localtime(time);
+  my $res = sprintf("%04d-%02d-%02d %02d:%02d:%02d", $year + 1900, $mon+1, $mday, $hour, $min, $sec) ;
+  return($res);
+} # now
+
+# --------------------------------------------------------------------
+
+
+
+# --------------------------------------------------------------------
+# MAIN
 
 # Instantiate a new html document
 my $html = HtmlDocument->new("HtmlDocument_Test_Page");
 
-$html->add_remark("Created: " . iso_datetime());
+$html->add_remark("Created: " . now());
 
 $html->add_heading("1", "This is the Test Page for the HtmlDocument perl module", "_default_");
 
+
 # At this place, local anchors (as table of contents) shall be inserted.
 $html->set_local_anchor_list();
+
 
 $html->add_heading("2", "Lorem Ipsum", "_default_");
 

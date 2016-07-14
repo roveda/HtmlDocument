@@ -84,6 +84,8 @@
 # 2016-07-13, 0.03, roveda
 #   Removed the usage of Misc.pm
 #   Added set_style().
+# 2016-07-14, 0.04, roveda
+#   Added exec_os_command() to get rid of the dependency to Misc.pm
 #
 # ============================================================
 
@@ -99,7 +101,7 @@ package HtmlDocument;
 
 # @EXPORT = qw(html_embody html_h html_link html_place_anchor_list html_set_anchor html_table html_text);
 
-my $VERSION = 0.03;
+my $VERSION = 0.04;
 
 
 # ------------------------------------------------------------
@@ -122,6 +124,47 @@ my $DEFAULT_STYLE_DEFS="
       padding: 5px;
   }
 ";
+
+# --------------------------------------------------------------------
+sub exec_os_command {
+  # exec_os_command(command);
+  # 
+  # Executes the os system command, without catching the output.
+  # It returns 1 on success, undef in any error has occurred.
+  # Error messages are printed to STDERR.
+
+  my $cmd = shift;
+
+  if ($cmd) {
+
+    system($cmd);
+    my $xval = $?;
+
+    if ($xval == -1) {
+      # <cmd> may not be available
+      print STDERR sub_name() . ": ERROR: failed to execute command '$cmd', exit value is: $xval: $!\n";
+      return(undef);
+    }
+    elsif ($xval & 127) {
+      print STDERR sub_name() . ": ERROR: child died with signal ', $xval & 127, ', coredump: ", ($? & 128) ? 'yes' : 'no', "\n";
+      return(undef);
+    }
+    elsif ($xval != 0) {
+      print STDERR sub_name() . ": ERROR: failed to execute command '$cmd', exit value is: $xval: $!\n";
+      return(undef);
+    }
+    else {
+      # OK, proper execution
+      # print "Command '$cmd' exited with value ", $xval >> 8, "\n";
+      return(1);
+    }
+  } else {
+    print STDERR sub_name() . ": ERROR: no command given as parameter!\n";
+  }
+
+  return(undef);
+
+} # exec_os_command
 
 
 # ------------------------------------------------------------
