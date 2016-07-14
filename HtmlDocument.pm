@@ -44,27 +44,24 @@
 # ---------------------------------------------------------
 # Copyright 2016, roveda
 #
-# This file is part of ORACLE_TOOLS.
-#
-# ORACLE_TOOLS is free software: you can redistribute it and/or modify
+# HtmlDocument.pm is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
 # (at your option) any later version.
 #
-# ORACLE_TOOLS is distributed in the hope that it will be useful,
+# HtmlDocument.pm is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 # GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License
-# along with ORACLE_TOOLS.  If not, see <http://www.gnu.org/licenses/>.
+# along with HtmlDocument.pm. If not, see <http://www.gnu.org/licenses/>.
 #
 #
 # ---------------------------------------------------------
 # Dependencies:
 #
 #   perl v5.6.0
-#   Misc
 #
 # ---------------------------------------------------------
 # Installation:
@@ -74,8 +71,7 @@
 #     Linux:   /usr/lib/perl5/site_perl
 #     HP-UX:   /opt/perl/lib/site_perl
 #     Windows: <LW>:\Perl\site\lib
-#
-#   It is placed in the current directory of the ORACLE_TOOLS.
+#     or in the local directory, if applicable.
 #
 # ---------------------------------------------------------
 # Versions:

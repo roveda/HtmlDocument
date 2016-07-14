@@ -69,6 +69,9 @@ The table caption is optional.
     get_html()
 Returns the so far created html document as a string.
 
+    get_style()
+Returns the currently set style definitions.
+
     get_title()
 Returns the title of the htm document, if defined.
 
@@ -89,6 +92,22 @@ That inserts a special remark which will be replaced by the links to **all** fil
 when the html document is requested (`get_html`, `save2file`).
 You may use that e.g. for a table of contents. It can be used more than once. 
 
+    set_style(<style_definitions>)
+Set the style definitions for the html document. These are the default settings
+(for a simple design):
+```
+  table {
+      border-collapse: collapse;
+      border: 1px solid black;
+      margin-top: 5px;
+  }
+
+  th, td {
+      border: 1px solid black;
+      padding: 5px;
+  }
+```
+
     set_title(<mytitle>)
 Set the title of the html document.
 
@@ -99,7 +118,7 @@ request the html, the string is enclosed in html head and body and
 returned.
 
 This does NOT cover ANY html tags and is not a replacement for
-the usage of html itself. The user still need to know about html and can add
+the usage of html coding itself. The user still need to know about html and can add
 arbitrary html using the add_html() method.
 
 # Example
