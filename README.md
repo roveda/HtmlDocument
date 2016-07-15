@@ -67,8 +67,7 @@ It will be replaced during output of the html at the position, where the local a
 is to be placed. See `set_local_anchor_list()`.
 
     add_paragraph(<type>, <text>)
-Add a paragraph of any type. Use e.g. 'p' or 'pre' as type. You also may use 
-that for text sections enclosed in special tags like <b> or <tt>.
+Add a paragraph of any type. Use e.g. 'p' or 'pre' as type.
 
     add_remark(<remark>)
 Add a remark to the html document.
@@ -119,7 +118,7 @@ You may use that e.g. for a table of contents. It can be used more than once.
 
     set_style(<style_definitions>)
 Set the style definitions for the html document. These are the default settings
-(for a simple design):
+(for a simple and neutral design):
 ```
   table {
       border-collapse: collapse;
@@ -136,27 +135,19 @@ Set the style definitions for the html document. These are the default settings
     set_title(<mytitle>)
 Set the title of the html document.
 
-# General
-The html document ist created as a string, containing an arbitrary
-number of html elements that you append to the string. When you
-request the html, the string is enclosed in html head and body and
-returned.
-
-This does NOT cover ANY html tags and is not a replacement for
-the usage of html coding itself. The user still need to know about html and can add
-arbitrary html using the add_html() method.
-
 # Example
-This is a perl snippet to demonstrate the usage of this module.
+This is a perl snippet to demonstrate the basic usage of this module.
+See the `HtmlDocumentTest.pl` script for a complete example.
+
 ```perl
 use strict;
 use warnings;
 
 use HtmlDocument;
 
-my $html = HtmlDocument->new("HtmlDocument test page for github");
+my $html = HtmlDocument->new("HtmlDocument Example");
 
-$html->add_remark("Created: " . iso_datetime());
+$html->add_remark("Created by me");
 
 $html->add_heading("1", "First Heading", "_default_");
 
@@ -173,8 +164,10 @@ $html->add_paragraph("pre", "-rw-rw-r-- 1 foo bar 0 Sep 14 18:44 chapter1.txt
 -rw-rw-r-- 1 foo bar 0 Sep 14 18:49 Chapter_headings.txt
 -rw-rw-r-- 1 foo bar 0 Sep 14 18:49 Preface.txt");
 
+# Add a link to the top of the page
 $html->add_goto_top("Up");
 
+# Horizontal ruler
 $html->add_hr();
 
 $html->add_heading("2", "Example Measurement Result Table", "_default_");
@@ -190,24 +183,25 @@ Batched IO same unit count!290!
 Batched IO single block count!23!
 Batched IO slow jump count!0!";
 
-# Split it up into an array of lines
+# Split text up into an array of lines
 my @RESULTS = split(/\n/, $results);
 
-# Append a table, '!' as delimiter, left and right alignment, no title rows
+# Append a table, '!' as delimiter, left and right alignment, no title rows, caption
 $html->add_table(\@RESULTS, "!", "LR",0 , "Measurement results");
 
+# Add a link to the top of the page
 $html->add_goto_top("Up");
 
 # Output the html document to screen
 print $html->get_html();
 print "\n";
 
+# -----
 # Get the title of the html document, use it as file name.
 my $t = $html->get_title();
 
-# Save the file, compress with xz
-my $f = $html->save2file("/tmp/$t", "xz", "force");
-# Show the changed file name
+# Save the file
+my $f = $html->save2file("/tmp/$t");
+# print the file name
 print "Saved as file: $f\n";
 ```
-
