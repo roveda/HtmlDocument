@@ -1,4 +1,4 @@
-## HtmlDocument
+### HtmlDocument
 A perl module to build simple html documents in memory and save them to disk.
 
 Use this perl package to create an html document.
@@ -6,7 +6,7 @@ It will create an empty html when instantiated and you
 may use methods to append more html to it. 
 You cannot insert elements, only append!
 
-# General
+## General
 The html document ist created as a string, containing an arbitrary
 number of html elements that you append to the string. When you
 request the html, the string is enclosed in html head and body sections and
@@ -16,12 +16,15 @@ This does NOT cover ANY POSSIBLE html tags and is not a replacement for
 the usage of native html coding itself. The user still need to know about html 
 and can add arbitrary html using the add_html() method.
 
+## Supported HTML Elements
 Supported html elements are: paragraphs, headings, tables, anchors, links, 
-breaks, horizontal rulers and remarks.
+ordered and unordered lists, breaks, horizontal rulers and remarks.
 Default style definitions can be adopted to your preferences.
 
 It has special features concerning anchors to simplify table of contents, 
-see the detailed description below.
+see the description below.
+
+## Methods and Functions
 
     HtmlDocument->new([title]);
 Create a new html document, give optionally a title (can also be set later).
@@ -36,7 +39,7 @@ Remember to use "#anchor" as link destination.
 Add a break.
 
     add_goto_top(<text>)
-Add a link that scrolls the html document to the top of the document.
+Add a link that points to the top of the html document.
 The text is displayed as link. Typically used for 'Up' or 'go to top'.
 
     add_heading(<LEVEL>, <text> [, <anchor>])
@@ -54,13 +57,18 @@ Add arbitrary html code to the html document.
     add_link(<link>, <text>)
 Add a link to the html document.
 
+    add_ol(<ref_to_array> [, <list_type> [, <start_value>])
+Add an ordered list. The array elements are inserted as the list elements.
+Optionally specify the list type (1 Aa Ii) and/or the start value.
+
     add_local_anchor(<anchor>, <text>)
 An anchor is set at the current position, the text is filed in an array for later use.
 It will be replaced during output of the html at the position, where the local anchor list
 is to be placed. See `set_local_anchor_list()`.
 
     add_paragraph(<type>, <text>)
-Add a paragraph of any type. Use e.g. 'p' or 'pre' as type.
+Add a paragraph of any type. Use e.g. 'p' or 'pre' as type. You also may use 
+that for text sections enclosed in special tags like <b> or <tt>.
 
     add_remark(<remark>)
 Add a remark to the html document.
@@ -79,6 +87,9 @@ column which defines its respective alignment.
 The number of title rows define the number of rows, that are enclosed in 'th' tags
 instead of 'td' tags.
 The table caption is optional.
+
+    add_ul(<ref_to_array>)
+Add an unordered list. The array elements are inserted as the list elements.
 
     get_html()
 Returns the so far created html document as a string.
