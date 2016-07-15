@@ -1,6 +1,7 @@
 ### HtmlDocument
 A perl module to build simple html documents in memory and save them to disk.
 
+
 Use this perl package to create an html document.
 It will create an empty html when instantiated and you
 may use methods to append more html to it. 
